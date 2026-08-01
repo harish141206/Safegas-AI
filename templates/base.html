@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}SafeGas AI{% endblock %}
+    </title>
+
+    <!-- CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+</head>
+
+<body>
+
+    <!-- ==========================
+         Navigation Bar
+    =========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <i class="fa-solid fa-fire-flame-curved"></i>
+
+            <span>SafeGas AI</span>
+
+        </div>
+
+        <nav>
+
+            <ul>
+
+                <li>
+                    <a href="{{ url_for('routes.dashboard') }}">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        Dashboard
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('routes.history') }}">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                        History
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('routes.alerts') }}">
+                        <i class="fa-solid fa-bell"></i>
+                        Alerts
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('routes.chatbot') }}">
+                        <i class="fa-solid fa-robot"></i>
+                        Chatbot
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{ url_for('routes.emergency') }}">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                        Emergency
+                    </a>
+                </li>
+
+            </ul>
+
+        </nav>
+
+    </header>
+
+    <!-- ==========================
+         Main Content
+    =========================== -->
+
+    <main class="main-content">
+
+        {% block content %}
+
+        {% endblock %}
+
+    </main>
+
+    <!-- ==========================
+         Footer
+    =========================== -->
+
+    <footer>
+
+        <div class="footer-content">
+
+            <h3>SafeGas AI</h3>
+
+            <p>
+
+                AI-Powered Smart LPG Gas Leakage Prediction &
+                Accident Prevention System
+
+            </p>
+
+            <hr>
+
+            <p>
+
+                Developed using
+
+                ESP32 • Flask • SQLAlchemy • OpenAI • Interakt • SQLite
+
+            </p>
+
+            <p>
+
+                © 2026 SafeGas AI | All Rights Reserved
+
+            </p>
+
+        </div>
+
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+
+    {% block scripts %}
+
+    {% endblock %}
+
+</body>
+
+</html>

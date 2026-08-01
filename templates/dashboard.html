@@ -1,0 +1,184 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard | SafeGas AI
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+
+    <!-- Dashboard Header -->
+
+    <div class="dashboard-header">
+
+        <h1>🔥 SafeGas AI Dashboard</h1>
+
+        <p>
+            AI Powered Smart LPG Gas Leakage Prediction &
+            Accident Prevention System
+        </p>
+
+    </div>
+
+    {% if sensor %}
+
+    <!-- Current Risk -->
+
+    <div class="status-box">
+
+        <h2>Current System Status</h2>
+
+        <h1 id="riskLevel" class="{{ sensor.risk_level|lower }}">
+            {{ sensor.risk_level }}
+        </h1>
+
+        <p>
+            AI Risk Score :
+            <strong id="riskScore">{{ sensor.risk_score }} %</strong>
+        </p>
+
+    </div>
+
+    <!-- Sensor Cards -->
+
+    <h2 class="section-title">
+        📊 Live Sensor Monitoring
+    </h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>🔥 Gas Level</h3>
+            <p id="gasLevel">{{ sensor.gas_level }} ppm</p>
+        </div>
+
+        <div class="card">
+            <h3>🌡 Temperature</h3>
+            <p id="temperature">{{ sensor.temperature }} °C</p>
+        </div>
+
+        <div class="card">
+            <h3>💧 Humidity</h3>
+            <p id="humidity">{{ sensor.humidity }} %</p>
+        </div>
+
+        <div class="card">
+            <h3>🔥 Flame Sensor</h3>
+            <p id="flameStatus">{{ sensor.flame_status }}</p>
+        </div>
+
+    </div>
+
+    <!-- Device Status -->
+
+    <h2 class="section-title">
+        ⚙ Automatic Safety Devices
+    </h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>Relay 1</h3>
+            <p id="relay1">{{ sensor.relay1_status }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Relay 2</h3>
+            <p id="relay2">{{ sensor.relay2_status }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Exhaust Fan</h3>
+            <p id="fan">{{ sensor.fan_status }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Buzzer</h3>
+            <p id="buzzer">{{ sensor.buzzer_status }}</p>
+        </div>
+
+    </div>
+
+    <!-- System Information -->
+
+    <h2 class="section-title">
+        ℹ System Information
+    </h2>
+
+    <div class="card-container">
+
+        <div class="card">
+            <h3>Current Time</h3>
+            <p id="currentTime"></p>
+        </div>
+
+        <div class="card">
+            <h3>Last Updated</h3>
+            <p id="lastUpdated">{{ sensor.created_at }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Communication</h3>
+            <p>USB Serial</p>
+        </div>
+
+        <div class="card">
+            <h3>Database</h3>
+            <p>SQLite</p>
+        </div>
+
+    </div>
+
+    <!-- AI Recommendation -->
+
+    <div class="status-box">
+
+        <h2>🤖 AI Recommendation</h2>
+
+        <p id="recommendation">
+
+        {% if sensor.risk_level == "SAFE" %}
+
+            ✅ No gas leakage detected.
+            The environment is safe.
+
+        {% elif sensor.risk_level == "MEDIUM" %}
+
+            ⚠ Gas concentration is increasing.
+            Please monitor the gas cylinder carefully.
+
+        {% elif sensor.risk_level == "HIGH" %}
+
+            🚨 High gas concentration detected.
+            Exhaust fan and buzzer are activated automatically.
+
+        {% elif sensor.risk_level == "CRITICAL" %}
+
+            🔥 Critical LPG Gas Leakage Detected.
+            Leave the area immediately.
+            WhatsApp emergency alert has been sent.
+
+        {% endif %}
+
+        </p>
+
+    </div>
+
+    {% else %}
+
+    <div class="status-box">
+
+        <h2>No Sensor Data Available</h2>
+
+        <p>
+            Please connect the ESP32 and start monitoring.
+        </p>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

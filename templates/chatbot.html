@@ -1,0 +1,133 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="title">🤖 SafeGas AI Chatbot</h1>
+
+    <div class="chat-container" id="chatContainer">
+
+        {% if chats %}
+
+            {% for chat in chats %}
+
+            <div class="user-message">
+                <strong>👤 You</strong>
+                <p>{{ chat.user_message }}</p>
+            </div>
+
+            <div class="bot-message">
+                <strong>🛡 SafeGas AI</strong>
+                <p>{{ chat.bot_reply }}</p>
+                <small>{{ chat.created_at }}</small>
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <div class="bot-message">
+                <strong>🛡 SafeGas AI</strong>
+                <p>Hello! I'm SafeGas AI.</p>
+                <p>Ask me anything about LPG safety, gas leakage, fire emergencies, or your SafeGas system.</p>
+            </div>
+
+        {% endif %}
+
+    </div>
+
+    <div class="chat-input-area">
+
+        <form id="chatForm">
+
+            <input
+                type="text"
+                id="message"
+                placeholder="Type your message..."
+                autocomplete="off"
+                required
+            >
+
+            <button type="submit">
+                Send
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+
+const form = document.getElementById("chatForm");
+const messageInput = document.getElementById("message");
+const chatContainer = document.getElementById("chatContainer");
+
+chatContainer.scrollTop = chatContainer.scrollHeight;
+
+form.addEventListener("submit", async function(e){
+
+    e.preventDefault();
+
+    const message = messageInput.value.trim();
+
+    if(message === "") return;
+
+    chatContainer.innerHTML += `
+        <div class="user-message">
+            <strong>👤 You</strong>
+            <p>${message}</p>
+        </div>
+    `;
+
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    messageInput.value = "";
+
+    try{
+
+        const response = await fetch("/api/chat",{
+
+            method:"POST",
+
+            headers:{
+                "Content-Type":"application/json"
+            },
+
+            body:JSON.stringify({
+                message:message
+            })
+
+        });
+
+        const data = await response.json();
+
+        chatContainer.innerHTML += `
+            <div class="bot-message">
+                <strong>🛡 SafeGas AI</strong>
+                <p>${data.reply}</p>
+            </div>
+        `;
+
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+
+    }
+
+    catch(error){
+
+        chatContainer.innerHTML += `
+            <div class="bot-message">
+                <strong>🛡 SafeGas AI</strong>
+                <p>Unable to connect to the chatbot.</p>
+            </div>
+        `;
+
+    }
+
+});
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="title">
+
+        WhatsApp Alert History
+
+    </h1>
+
+    {% if alerts %}
+
+    <table class="history-table">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Risk Score</th>
+
+                <th>Risk Level</th>
+
+                <th>Alert Message</th>
+
+                <th>Status</th>
+
+                <th>Date & Time</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for alert in alerts %}
+
+            <tr>
+
+                <td>{{ alert.id }}</td>
+
+                <td>{{ alert.risk_score }} %</td>
+
+                <td>{{ alert.risk_level }}</td>
+
+                <td>{{ alert.alert_message }}</td>
+
+                <td>{{ alert.message_status }}</td>
+
+                <td>{{ alert.created_at }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <h2>No Alert History Available</h2>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

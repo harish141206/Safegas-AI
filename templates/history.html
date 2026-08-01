@@ -1,0 +1,93 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="title">
+        Sensor Data History
+    </h1>
+
+    {% if history %}
+
+    <table class="history-table">
+
+        <thead>
+
+            <tr>
+
+                <th>ID</th>
+
+                <th>Gas Level</th>
+
+                <th>Temperature</th>
+
+                <th>Humidity</th>
+
+                <th>Flame</th>
+
+                <th>Risk Score</th>
+
+                <th>Risk Level</th>
+
+                <th>Relay 1</th>
+
+                <th>Relay 2</th>
+
+                <th>Fan</th>
+
+                <th>Buzzer</th>
+
+                <th>Date & Time</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% for sensor in history %}
+
+            <tr>
+
+                <td>{{ sensor.id }}</td>
+
+                <td>{{ sensor.gas_level }} ppm</td>
+
+                <td>{{ sensor.temperature }} °C</td>
+
+                <td>{{ sensor.humidity }} %</td>
+
+                <td>{{ sensor.flame_status }}</td>
+
+                <td>{{ sensor.risk_score }} %</td>
+
+                <td>{{ sensor.risk_level }}</td>
+
+                <td>{{ sensor.relay1_status }}</td>
+
+                <td>{{ sensor.relay2_status }}</td>
+
+                <td>{{ sensor.fan_status }}</td>
+
+                <td>{{ sensor.buzzer_status }}</td>
+
+                <td>{{ sensor.created_at }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+    {% else %}
+
+    <h3>No Sensor History Available.</h3>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,193 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+    <h1 class="title">
+        🚨 SafeGas AI Emergency Status
+    </h1>
+
+    {% if sensor %}
+
+    <div class="status-box">
+
+        <h2>
+
+            Current Risk :
+
+            <span class="{{ sensor.risk_level|lower }}">
+
+                {{ sensor.risk_level }}
+
+            </span>
+
+        </h2>
+
+    </div>
+
+    <div class="card-container">
+
+        <div class="card">
+
+            <h3>Gas Level</h3>
+
+            <p>{{ sensor.gas_level }} ppm</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Temperature</h3>
+
+            <p>{{ sensor.temperature }} °C</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Humidity</h3>
+
+            <p>{{ sensor.humidity }} %</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Flame Status</h3>
+
+            <p>{{ sensor.flame_status }}</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Risk Score</h3>
+
+            <p>{{ sensor.risk_score }} %</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Relay 1</h3>
+
+            <p>{{ sensor.relay1_status }}</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Relay 2</h3>
+
+            <p>{{ sensor.relay2_status }}</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Exhaust Fan</h3>
+
+            <p>{{ sensor.fan_status }}</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Buzzer</h3>
+
+            <p>{{ sensor.buzzer_status }}</p>
+
+        </div>
+
+        <div class="card">
+
+            <h3>Last Updated</h3>
+
+            <p>{{ sensor.created_at }}</p>
+
+        </div>
+
+    </div>
+
+    <br>
+
+    {% if sensor.risk_level == "SAFE" %}
+
+    <div class="safe-message">
+
+        <h2>✅ System Status : SAFE</h2>
+
+        <p>No gas leakage detected.</p>
+
+    </div>
+
+    {% elif sensor.risk_level == "MEDIUM" %}
+
+    <div class="warning-message">
+
+        <h2>⚠ Warning</h2>
+
+        <p>Gas concentration is increasing. Please monitor the cylinder.</p>
+
+    </div>
+
+    {% elif sensor.risk_level == "HIGH" %}
+
+    <div class="danger-message">
+
+        <h2>🚨 High Risk Detected</h2>
+
+        <p>
+
+            Automatic safety actions have been activated.
+
+            Exhaust Fan : ON
+
+            Buzzer : ON
+
+            Relay : ON
+
+        </p>
+
+    </div>
+
+    {% elif sensor.risk_level == "CRITICAL" %}
+
+    <div class="critical-message">
+
+        <h2>🔥 CRITICAL EMERGENCY</h2>
+
+        <p>
+
+            Leave the area immediately.
+
+            Avoid electrical switches.
+
+            Emergency WhatsApp Alert Sent.
+
+        </p>
+
+    </div>
+
+    {% endif %}
+
+    {% else %}
+
+    <h2>No Sensor Data Available.</h2>
+
+    {% endif %}
+
+</div>
+
+<script>
+
+setTimeout(function(){
+
+    location.reload();
+
+},5000);
+
+</script>
+
+{% endblock %}

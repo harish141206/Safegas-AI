@@ -1,0 +1,7 @@
+Flask
+openai
+python-dotenv
+requests
+gunicorn
+Flask-SQLAlchemy
+Jinja2
